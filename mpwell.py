@@ -1,9 +1,10 @@
 #! /bin/env python
 
+import matplotlib as mpl
 import matplotlib.pyplot as plt
 
 default_color='b'
-def make_log(tracks, title=None, mindepth=None, maxdepth=None, tagged_depths=None):
+def mpwell(tracks, title=None, mindepth=None, maxdepth=None, tagged_depths=None):
     """Create a well log using matplotlib.
 
        tracks: list of tracks. Each track is a dictionary with a 'traces'
