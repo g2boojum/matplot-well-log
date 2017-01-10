@@ -1,9 +1,10 @@
 #! /bin/env python
 
+import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 
-default_color='b'
+default_color='C0'
 def mpwell(tracks, title=None, mindepth=None, maxdepth=None, tagged_depths=None):
     """Create a well log using matplotlib.
 
@@ -40,26 +41,27 @@ def mpwell(tracks, title=None, mindepth=None, maxdepth=None, tagged_depths=None)
         maxdepth = max(first_trace_data['depth'])
     # set up each track
     for ax in axs:
-        ax.set_ylim (mindepth,maxdepth)
+        ax.set_ylim(mindepth,maxdepth)
         ax.invert_yaxis()
         ax.get_xaxis().set_visible(False)
-        ax.grid(False)
     # plot each trace in each track
-    for i, track in enumerate(tracks):
-        for num_trace, trace in enumerate(track['traces']):
+    for num_track, track in enumerate(tracks):
+        for i, trace in enumerate(track['traces']):
             color = trace.get('color', default_color)
             label = trace.get('label', trace['curve'])
             ls = trace.get('ls', '-')
             marker = trace.get('marker', 'None')
-            axi = axs[i].twiny()
+            axi = axs[num_track].twiny()
             axi.set_xlim(*trace['range'])
             axi.set_ylim(mindepth, maxdepth)
-            axi.spines['top'].set_position(('outward', 5+30*num_trace))
+            axi.spines['top'].set_position(('outward', 5+30*i))
             axi.spines['top'].set_color(color)
             axi.xaxis.set_ticks(trace['range'])
             axi.set_xlabel(label, color=color, labelpad=-5)
-            data = trace['data']
-            axi.plot(data[trace['curve']], data['depth'], ls=ls, marker=marker, color=color)
+            axi.plot(trace['data'][trace['curve']], trace['data']['depth'], 
+                     ls=ls, marker=marker, color=color)
+            if 'xref' in trace:
+                axi.axvline(trace['xref'], color='k', linestyle='--')
             axi.tick_params(axis='x', color=color, length=0)
             axi.yaxis.grid(False)
             axi.invert_yaxis()
@@ -73,5 +75,3 @@ def mpwell(tracks, title=None, mindepth=None, maxdepth=None, tagged_depths=None)
                 y_formatter = mpl.ticker.ScalarFormatter(useOffset=False)
                 axi.yaxis.set_major_formatter(y_formatter)
     return f
-
-
