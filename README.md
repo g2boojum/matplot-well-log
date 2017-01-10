@@ -21,3 +21,5 @@ tracks = [track1, track2, track3, track4]
 xrd_depths = xrd3df['depth']
 log = mpwell(tracks, 'My well', min(xrd_depths), max(xrd_depths), xrd3df['depth'])
 ```
+
+![example log](example.png)
