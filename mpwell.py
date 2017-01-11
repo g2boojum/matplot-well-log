@@ -62,13 +62,13 @@ def mpwell(tracks, title=None, mindepth=None, maxdepth=None, tagged_depths=None)
                      ls=ls, marker=marker, color=color)
             if 'xref' in trace:
                 axi.axvline(trace['xref'], color='k', linestyle='--')
-            axi.tick_params(axis='x', color=color, length=0)
+            axi.tick_params(axis='x', colors=color, length=0)
             axi.yaxis.grid(False)
             axi.invert_yaxis()
             if tagged_depths is not None:
                 for depth in tagged_depths:
                       axi.axhline(depth, color='grey', lw=1)
-            if i>0:
+            if num_track>0:
                 axi.set_yticklabels([])
             else:
                 # Turn off the "offset" in the y-axis labeling
