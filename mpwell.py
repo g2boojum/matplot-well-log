@@ -74,4 +74,5 @@ def mpwell(tracks, title=None, mindepth=None, maxdepth=None, tagged_depths=None)
                 # Turn off the "offset" in the y-axis labeling
                 y_formatter = mpl.ticker.ScalarFormatter(useOffset=False)
                 axi.yaxis.set_major_formatter(y_formatter)
+        axs[0].set_ylabel('depth (m)')
     return f
